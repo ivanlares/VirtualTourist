@@ -12,6 +12,7 @@
 		EA2EA2FD200C1C6800FA87BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2FC200C1C6800FA87BB /* Assets.xcassets */; };
 		EA2EA300200C1C6800FA87BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2FE200C1C6800FA87BB /* LaunchScreen.storyboard */; };
 		EA2EA310200C425100FA87BB /* TravelMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */; };
+		EA2EA314200D4C2C00FA87BB /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA313200D4C2C00FA87BB /* ApiKeys.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		EA2EA2FF200C1C6800FA87BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA2EA301200C1C6800FA87BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelMapViewController.swift; sourceTree = "<group>"; };
+		EA2EA313200D4C2C00FA87BB /* ApiKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		EA2EA308200C34FE00FA87BB /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				EA2EA313200D4C2C00FA87BB /* ApiKeys.plist */,
 				EA2EA301200C1C6800FA87BB /* Info.plist */,
 				EA2EA2FC200C1C6800FA87BB /* Assets.xcassets */,
 			);
@@ -172,6 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA2EA300200C1C6800FA87BB /* LaunchScreen.storyboard in Resources */,
+				EA2EA314200D4C2C00FA87BB /* ApiKeys.plist in Resources */,
 				EA2EA2FD200C1C6800FA87BB /* Assets.xcassets in Resources */,
 				EA2EA2FB200C1C6800FA87BB /* Main.storyboard in Resources */,
 			);
