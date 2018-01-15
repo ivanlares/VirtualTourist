@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		EA2EA2F6200C1C6800FA87BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EA2F5200C1C6800FA87BB /* AppDelegate.swift */; };
-		EA2EA2F8200C1C6800FA87BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EA2F7200C1C6800FA87BB /* ViewController.swift */; };
 		EA2EA2FB200C1C6800FA87BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2F9200C1C6800FA87BB /* Main.storyboard */; };
 		EA2EA2FD200C1C6800FA87BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2FC200C1C6800FA87BB /* Assets.xcassets */; };
 		EA2EA300200C1C6800FA87BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2FE200C1C6800FA87BB /* LaunchScreen.storyboard */; };
@@ -17,7 +16,6 @@
 /* Begin PBXFileReference section */
 		EA2EA2F2200C1C6800FA87BB /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2EA2F5200C1C6800FA87BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EA2EA2F7200C1C6800FA87BB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EA2EA2FA200C1C6800FA87BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EA2EA2FC200C1C6800FA87BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA2EA2FF200C1C6800FA87BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,13 +53,60 @@
 			isa = PBXGroup;
 			children = (
 				EA2EA2F5200C1C6800FA87BB /* AppDelegate.swift */,
-				EA2EA2F7200C1C6800FA87BB /* ViewController.swift */,
-				EA2EA2F9200C1C6800FA87BB /* Main.storyboard */,
-				EA2EA2FC200C1C6800FA87BB /* Assets.xcassets */,
-				EA2EA2FE200C1C6800FA87BB /* LaunchScreen.storyboard */,
-				EA2EA301200C1C6800FA87BB /* Info.plist */,
+				EA2EA309200C351400FA87BB /* Model */,
+				EA2EA30A200C351900FA87BB /* View */,
+				EA2EA30B200C351F00FA87BB /* Controller */,
+				EA2EA30C200C354100FA87BB /* Client */,
+				EA2EA308200C34FE00FA87BB /* Assets */,
 			);
 			path = "Virtual Tourist";
+			sourceTree = "<group>";
+		};
+		EA2EA307200C34ED00FA87BB /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				EA2EA2F9200C1C6800FA87BB /* Main.storyboard */,
+				EA2EA2FE200C1C6800FA87BB /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		EA2EA308200C34FE00FA87BB /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				EA2EA301200C1C6800FA87BB /* Info.plist */,
+				EA2EA2FC200C1C6800FA87BB /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		EA2EA309200C351400FA87BB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EA2EA30A200C351900FA87BB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EA2EA307200C34ED00FA87BB /* Storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EA2EA30B200C351F00FA87BB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EA2EA30C200C354100FA87BB /* Client */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Client;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,7 +181,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA2EA2F8200C1C6800FA87BB /* ViewController.swift in Sources */,
 				EA2EA2F6200C1C6800FA87BB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
