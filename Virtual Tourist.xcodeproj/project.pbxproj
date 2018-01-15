@@ -11,6 +11,7 @@
 		EA2EA2FB200C1C6800FA87BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2F9200C1C6800FA87BB /* Main.storyboard */; };
 		EA2EA2FD200C1C6800FA87BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2FC200C1C6800FA87BB /* Assets.xcassets */; };
 		EA2EA300200C1C6800FA87BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2FE200C1C6800FA87BB /* LaunchScreen.storyboard */; };
+		EA2EA310200C425100FA87BB /* TravelMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		EA2EA2FC200C1C6800FA87BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA2EA2FF200C1C6800FA87BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA2EA301200C1C6800FA87BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelMapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		EA2EA30B200C351F00FA87BB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA2EA2F6200C1C6800FA87BB /* AppDelegate.swift in Sources */,
+				EA2EA310200C425100FA87BB /* TravelMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +324,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7QMFZ4YQ9F;
-				INFOPLIST_FILE = "Virtual Tourist/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Virtual Tourist/Assets/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.laresivan.Virtual-Tourist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -335,7 +339,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7QMFZ4YQ9F;
-				INFOPLIST_FILE = "Virtual Tourist/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Virtual Tourist/Assets/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.laresivan.Virtual-Tourist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
