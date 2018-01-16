@@ -13,11 +13,13 @@ class TravelMapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     var currentPin: MKPointAnnotation?
+    static let annotationViewReuseIdentifier = "reusableAnnotation"
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         addGestures()
+        mapView.delegate = self
     }
     
     // MARK: Helper
@@ -27,9 +29,6 @@ class TravelMapViewController: UIViewController {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didPressMapWith(gesture:)))
         mapView.addGestureRecognizer(longPressGesture)
     }
-    
-
-    
     
     // MARK: Target Action
     
@@ -62,9 +61,22 @@ class TravelMapViewController: UIViewController {
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale  = Locale.current
+        
+        let date = Date()
+        
+        annotation.title = dateFormatter.string(from: date)
+        annotation.subtitle = "subtitle"
         mapView.addAnnotation(annotation)
+       
         // update current pin
         currentPin = annotation
+        
+        
     }
 
 }
@@ -73,4 +85,20 @@ class TravelMapViewController: UIViewController {
 
 extension TravelMapViewController: MKMapViewDelegate{
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: TravelMapViewController.annotationViewReuseIdentifier){
+            return annotationView
+        }else {
+            let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: TravelMapViewController.annotationViewReuseIdentifier)
+            annotationView.rightCalloutAccessoryView = UIButton(type: .infoLight)
+            annotationView.canShowCallout = true
+            annotationView.canShowCallout = true
+            
+            return annotationView
+        }
+
+        
+    }
 }
