@@ -13,6 +13,7 @@
 		EA2EA300200C1C6800FA87BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2FE200C1C6800FA87BB /* LaunchScreen.storyboard */; };
 		EA2EA310200C425100FA87BB /* TravelMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */; };
 		EA2EA314200D4C2C00FA87BB /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA313200D4C2C00FA87BB /* ApiKeys.plist */; };
+		EACBAD1C201005E000769E70 /* MKMapView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACBAD1B201005E000769E70 /* MKMapView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		EA2EA301200C1C6800FA87BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelMapViewController.swift; sourceTree = "<group>"; };
 		EA2EA313200D4C2C00FA87BB /* ApiKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = "<group>"; };
+		EACBAD1B201005E000769E70 /* MKMapView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				EA2EA30A200C351900FA87BB /* View */,
 				EA2EA30B200C351F00FA87BB /* Controller */,
 				EA2EA30C200C354100FA87BB /* Client */,
+				EACBAD1A201005BD00769E70 /* Extensions */,
 				EA2EA308200C34FE00FA87BB /* Assets */,
 			);
 			path = "Virtual Tourist";
@@ -113,6 +116,14 @@
 			children = (
 			);
 			path = Client;
+			sourceTree = "<group>";
+		};
+		EACBAD1A201005BD00769E70 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EACBAD1B201005E000769E70 /* MKMapView+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,6 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA2EA2F6200C1C6800FA87BB /* AppDelegate.swift in Sources */,
+				EACBAD1C201005E000769E70 /* MKMapView+Extension.swift in Sources */,
 				EA2EA310200C425100FA87BB /* TravelMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
