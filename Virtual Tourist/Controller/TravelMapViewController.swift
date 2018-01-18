@@ -22,7 +22,7 @@ class TravelMapViewController: UIViewController {
         mapView.delegate = self
     }
     
-    // MARK: Helper
+    // MARK: Helper Methods
     
     fileprivate func addGestures(){
         
@@ -33,6 +33,8 @@ class TravelMapViewController: UIViewController {
     // MARK: Target Action
     
     @objc func didPressMapWith(gesture: UILongPressGestureRecognizer){
+        
+        guard !mapView.isAnnotationActive else { return }
         
         let state = gesture.state
         let mapCoordiante = mapCoordinateFrom(gesture: gesture)
@@ -48,8 +50,40 @@ class TravelMapViewController: UIViewController {
         }
     }
     
-    // MARK: Map View Methods
+    @objc func showWebView(){
+        
+        print(#function)
+    }
+}
+
+// MARK: - Map View Delegate
+
+extension TravelMapViewController: MKMapViewDelegate{
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: TravelMapViewController.annotationViewReuseIdentifier){
+            return annotationView
+        }else {
+            let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: TravelMapViewController.annotationViewReuseIdentifier)
+            configure(annotationView: annotationView)
+            return annotationView
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl){
+        
+        if view.rightCalloutAccessoryView == control{
+            print("\nRight accessory")
+        }
+    }
+    
+}
+
+// MARK: - Map View Helper Methods
+
+extension TravelMapViewController{
+
     fileprivate func mapCoordinateFrom(gesture: UIGestureRecognizer) ->  CLLocationCoordinate2D{
         
         let coordinate:CGPoint = gesture.location(in: mapView)
@@ -72,33 +106,27 @@ class TravelMapViewController: UIViewController {
         annotation.title = dateFormatter.string(from: date)
         annotation.subtitle = "subtitle"
         mapView.addAnnotation(annotation)
-       
+        
         // update current pin
         currentPin = annotation
-        
-        
     }
-
-}
-
-// MARK: - Map View Delegate
-
-extension TravelMapViewController: MKMapViewDelegate{
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    /// Right callout button for annotation view
+    ///
+    /// - Returns: system info button
+    fileprivate func annotationViewRightCallOutButton() -> UIButton{
         
+        let button = UIButton(type: .infoLight)
+        return button
+    }
+    
+    /// Configures annotation view
+    ///
+    /// - Parameter annotationView: view to configure
+    fileprivate func configure(annotationView: MKAnnotationView){
         
-        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: TravelMapViewController.annotationViewReuseIdentifier){
-            return annotationView
-        }else {
-            let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: TravelMapViewController.annotationViewReuseIdentifier)
-            annotationView.rightCalloutAccessoryView = UIButton(type: .infoLight)
-            annotationView.canShowCallout = true
-            annotationView.canShowCallout = true
-            
-            return annotationView
-        }
-
-        
+        annotationView.canShowCallout = true
+        annotationView.canShowCallout = true
+        annotationView.rightCalloutAccessoryView = annotationViewRightCallOutButton()
     }
 }

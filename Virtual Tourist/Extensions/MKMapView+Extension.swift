@@ -15,4 +15,10 @@ extension MKMapView{
         
         removeAnnotations(annotations)
     }
+    
+    /// True if one or more annotations are selected
+    var isAnnotationActive: Bool{
+        return !selectedAnnotations.isEmpty
+    }
+    
 }
