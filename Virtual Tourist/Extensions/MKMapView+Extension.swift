@@ -16,6 +16,13 @@ extension MKMapView{
         removeAnnotations(annotations)
     }
     
+    func resignAllAnnotations(animated: Bool){
+        
+        for annotation in selectedAnnotations{
+            deselectAnnotation(annotation, animated: animated)
+        }
+    }
+    
     /// True if one or more annotations are selected
     var isAnnotationActive: Bool{
         return !selectedAnnotations.isEmpty

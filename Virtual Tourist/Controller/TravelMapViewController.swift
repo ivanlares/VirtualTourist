@@ -12,14 +12,21 @@ import MapKit
 class TravelMapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var editingLabel: UILabel!
     var currentPin: MKPointAnnotation?
     static let annotationViewReuseIdentifier = "reusableAnnotation"
+    var rightBarButtonItem: UIBarButtonItem?
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         addGestures()
         mapView.delegate = self
+        setEditLabel(hidden: true, animated: false)
+        
+        rightBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        
     }
     
     // MARK: Helper Methods
@@ -28,6 +35,13 @@ class TravelMapViewController: UIViewController {
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didPressMapWith(gesture:)))
         mapView.addGestureRecognizer(longPressGesture)
+    }
+    
+    fileprivate func setEditLabel(hidden: Bool, animated: Bool){
+        
+        UIView.animate(withDuration: animated ? 0.5 : 0){
+            self.editingLabel.alpha = (hidden ? 0.0 : 1.0)
+        }
     }
     
     // MARK: Target Action
@@ -53,6 +67,23 @@ class TravelMapViewController: UIViewController {
     @objc func showWebView(){
         
         print(#function)
+    }
+    
+    // MARK: Editing
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        
+        super.setEditing(editing, animated: animated)
+        
+        mapView.resignAllAnnotations(animated: animated)
+        
+        if editing{
+            rightBarButtonItem?.title = "Done"
+            setEditLabel(hidden: false, animated: true)
+        } else {
+            rightBarButtonItem?.title = "Edit"
+            setEditLabel(hidden: true, animated: true)
+        }
     }
 }
 
