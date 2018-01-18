@@ -48,12 +48,15 @@ class TravelMapViewController: UIViewController {
     
     @objc func didPressMapWith(gesture: UILongPressGestureRecognizer){
         
+        // return if annotation view is active
         guard !mapView.isAnnotationActive else { return }
         
-        let state = gesture.state
-        let mapCoordiante = mapCoordinateFrom(gesture: gesture)
+        // adjust touch location and create coordinate
+        var pinLocation = gesture.location(in: mapView)
+        pinLocation.y -= Constants.thumbOffset
+        let mapCoordiante = mapCoordinateFrom(coordinate:pinLocation)
         
-        switch state{
+        switch gesture.state {
         case .began:
             addAnnotation(inCoordinate: mapCoordiante)
         case .changed:
@@ -115,9 +118,8 @@ extension TravelMapViewController: MKMapViewDelegate{
 
 extension TravelMapViewController{
 
-    fileprivate func mapCoordinateFrom(gesture: UIGestureRecognizer) ->  CLLocationCoordinate2D{
+    fileprivate func mapCoordinateFrom(coordinate: CGPoint) ->  CLLocationCoordinate2D{
         
-        let coordinate:CGPoint = gesture.location(in: mapView)
         let mapCoordiante: CLLocationCoordinate2D = mapView.convert(coordinate, toCoordinateFrom: mapView)
         return mapCoordiante
     }
@@ -159,5 +161,13 @@ extension TravelMapViewController{
         annotationView.canShowCallout = true
         annotationView.canShowCallout = true
         annotationView.rightCalloutAccessoryView = annotationViewRightCallOutButton()
+    }
+}
+
+extension TravelMapViewController{
+    
+    struct Constants{
+        
+        static let thumbOffset: CGFloat = 35
     }
 }
