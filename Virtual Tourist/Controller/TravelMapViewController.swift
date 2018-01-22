@@ -97,30 +97,17 @@ class TravelMapViewController: UIViewController {
 // MARK: - Map View Delegate
 
 extension TravelMapViewController: MKMapViewDelegate{
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.annotationViewReuseIdentifier){
-            return annotationView
-        }else {
-            let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.annotationViewReuseIdentifier)
-            configure(annotationView: annotationView)
-            return annotationView
-        }
-    }
-    
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl){
-        
-        if view.rightCalloutAccessoryView == control{
-            print("\nRight accessory")
-        }
-    }
-    
+
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Probably not a good feature, but this is part of the rubric.
         // It would be more useful to save the location of the last pin.
         saveMapLocation()
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        
+        print(#function)
     }
     
 }
@@ -139,39 +126,9 @@ extension TravelMapViewController{
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale  = Locale.current
-        
-        let date = Date()
-        
-        annotation.title = dateFormatter.string(from: date)
-        annotation.subtitle = "subtitle"
         mapView.addAnnotation(annotation)
-        
         // update current pin
         currentPin = annotation
-    }
-    
-    /// Right callout button for annotation view
-    ///
-    /// - Returns: system info button
-    fileprivate func annotationViewRightCallOutButton() -> UIButton{
-        
-        let button = UIButton(type: .infoLight)
-        return button
-    }
-    
-    /// Configures annotation view
-    ///
-    /// - Parameter annotationView: view to configure
-    fileprivate func configure(annotationView: MKAnnotationView){
-        
-        annotationView.canShowCallout = true
-        annotationView.canShowCallout = true
-        annotationView.rightCalloutAccessoryView = annotationViewRightCallOutButton()
     }
     
     /// Save map view region and camera into user defaults
