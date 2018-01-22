@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA16FFB6201598D1003B33ED /* MKCoordinateRegion+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA16FFB5201598D1003B33ED /* MKCoordinateRegion+Extension.swift */; };
 		EA2EA2F6200C1C6800FA87BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EA2F5200C1C6800FA87BB /* AppDelegate.swift */; };
 		EA2EA2FB200C1C6800FA87BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2F9200C1C6800FA87BB /* Main.storyboard */; };
 		EA2EA2FD200C1C6800FA87BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2FC200C1C6800FA87BB /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA16FFB5201598D1003B33ED /* MKCoordinateRegion+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+Extension.swift"; sourceTree = "<group>"; };
 		EA2EA2F2200C1C6800FA87BB /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2EA2F5200C1C6800FA87BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA2EA2FA200C1C6800FA87BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		EA2EA309200C351400FA87BB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EAF1EF992012689800C41C3D /* CoreDataStack */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -122,8 +125,16 @@
 			isa = PBXGroup;
 			children = (
 				EACBAD1B201005E000769E70 /* MKMapView+Extension.swift */,
+				EA16FFB5201598D1003B33ED /* MKCoordinateRegion+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EAF1EF992012689800C41C3D /* CoreDataStack */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CoreDataStack;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA2EA2F6200C1C6800FA87BB /* AppDelegate.swift in Sources */,
+				EA16FFB6201598D1003B33ED /* MKCoordinateRegion+Extension.swift in Sources */,
 				EACBAD1C201005E000769E70 /* MKMapView+Extension.swift in Sources */,
 				EA2EA310200C425100FA87BB /* TravelMapViewController.swift in Sources */,
 			);

@@ -14,19 +14,23 @@ class TravelMapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var editingLabel: UILabel!
     var currentPin: MKPointAnnotation?
-    static let annotationViewReuseIdentifier = "reusableAnnotation"
     var rightBarButtonItem: UIBarButtonItem?
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         addGestures()
-        mapView.delegate = self
         setEditLabel(hidden: true, animated: false)
         
         rightBarButtonItem = editButtonItem
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
+        setMapRegionWithDefaults()
+        // set map view delegate after map view region is set
+        mapView.delegate = self
+        
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        print("\n\n", documentsPath, "\n\n")
     }
     
     // MARK: Helper Methods
@@ -96,10 +100,10 @@ extension TravelMapViewController: MKMapViewDelegate{
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: TravelMapViewController.annotationViewReuseIdentifier){
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.annotationViewReuseIdentifier){
             return annotationView
         }else {
-            let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: TravelMapViewController.annotationViewReuseIdentifier)
+            let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.annotationViewReuseIdentifier)
             configure(annotationView: annotationView)
             return annotationView
         }
@@ -110,6 +114,13 @@ extension TravelMapViewController: MKMapViewDelegate{
         if view.rightCalloutAccessoryView == control{
             print("\nRight accessory")
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        
+        // Probably not a good feature, but this is part of the rubric.
+        // It would be more useful to save the location of the last pin.
+        saveMapLocation()
     }
     
 }
@@ -162,12 +173,77 @@ extension TravelMapViewController{
         annotationView.canShowCallout = true
         annotationView.rightCalloutAccessoryView = annotationViewRightCallOutButton()
     }
+    
+    /// Save map view region and camera into user defaults
+    fileprivate func saveMapLocation(){
+        
+        // archive camera (NSCoding implemented by default)
+        let mapViewCamera = mapView.camera
+        let archivedMapCamera = NSKeyedArchiver.archivedData(withRootObject: mapViewCamera)
+        UserDefaults.standard.set(archivedMapCamera, forKey: Constants.mapCameraKey)
+        
+        // archived region (with Codable because it's a struct)
+        let mapViewRegion = mapView.region
+        if let archivedMapRegion = try? PropertyListEncoder().encode(mapViewRegion){
+            
+            UserDefaults.standard.set(archivedMapRegion, forKey: Constants.mapRegionKey)
+        }
+    }
+    
+    /// Sets self.mapView with region stored in user defaults
+    fileprivate func setMapRegionWithDefaults(){
+        
+        if let mapRegionFromDefaults = getMapRegionFromUserDefaults(){
+            
+            mapView.region = mapRegionFromDefaults
+        }
+        if let mapCameraFromDefaults = getMapCameraFromUserDefaults(){
+            
+            mapView.camera = mapCameraFromDefaults
+        }
+    }
+    
+    /// Returns map view region from user defaults
+    ///
+    /// - Returns: nil if no data is present
+    fileprivate func getMapRegionFromUserDefaults()  -> MKCoordinateRegion? {
+        
+        guard let archivedRegionData = UserDefaults.standard.object(forKey: Constants.mapRegionKey) as? Data else {
+            return nil
+        }
+ 
+        guard let regionPropertyList = try? PropertyListDecoder().decode(MKCoordinateRegion.self, from: archivedRegionData) else {
+            return nil
+        }
+        
+        return regionPropertyList
+    }
+    
+    fileprivate func getMapCameraFromUserDefaults() -> MKMapCamera?{
+        
+        if let archivedCamera = UserDefaults.standard.object(forKey: Constants.mapCameraKey) as? Data{
+            
+            return NSKeyedUnarchiver.unarchiveObject(with: archivedCamera) as? MKMapCamera
+        }
+        
+        return nil
+    }
 }
+
+// MARK: Constants
 
 extension TravelMapViewController{
     
     struct Constants{
         
+        /// Y-offset to account for user's finger/thumb.
         static let thumbOffset: CGFloat = 35
+        static let annotationViewReuseIdentifier = "reusableAnnotation"
+        
+        // Keys used to store map location in user defaults
+        static let mapRegionKey = "mapViewRegionKey"
+        static let mapCameraKey = "mapViewCameraKey"
+        
+        private init() {}
     }
 }
