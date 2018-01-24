@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA1396E32016B327005163C2 /* BaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1396E22016B327005163C2 /* BaseClient.swift */; };
+		EA1396E82017E374005163C2 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1396E72017E374005163C2 /* Client.swift */; };
 		EA16FFB6201598D1003B33ED /* MKCoordinateRegion+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA16FFB5201598D1003B33ED /* MKCoordinateRegion+Extension.swift */; };
 		EA2EA2F6200C1C6800FA87BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EA2F5200C1C6800FA87BB /* AppDelegate.swift */; };
 		EA2EA2FB200C1C6800FA87BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2F9200C1C6800FA87BB /* Main.storyboard */; };
@@ -14,10 +16,16 @@
 		EA2EA300200C1C6800FA87BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA2FE200C1C6800FA87BB /* LaunchScreen.storyboard */; };
 		EA2EA310200C425100FA87BB /* TravelMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */; };
 		EA2EA314200D4C2C00FA87BB /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA313200D4C2C00FA87BB /* ApiKeys.plist */; };
+		EA5C2C93201840B700BD7B1A /* PlistHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C2C92201840B700BD7B1A /* PlistHelper.swift */; };
+		EAA77947201DB96B00C6F09E /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA77946201DB96B00C6F09E /* NetworkingError.swift */; };
 		EACBAD1C201005E000769E70 /* MKMapView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACBAD1B201005E000769E70 /* MKMapView+Extension.swift */; };
+		EAF932AB201B0C350049DB67 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF932AA201B0C350049DB67 /* FlickrPhoto.swift */; };
+		EAF932AD201B1C340049DB67 /* FlickrAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF932AC201B1C340049DB67 /* FlickrAlbum.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA1396E22016B327005163C2 /* BaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClient.swift; sourceTree = "<group>"; };
+		EA1396E72017E374005163C2 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		EA16FFB5201598D1003B33ED /* MKCoordinateRegion+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKCoordinateRegion+Extension.swift"; sourceTree = "<group>"; };
 		EA2EA2F2200C1C6800FA87BB /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2EA2F5200C1C6800FA87BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -27,7 +35,11 @@
 		EA2EA301200C1C6800FA87BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelMapViewController.swift; sourceTree = "<group>"; };
 		EA2EA313200D4C2C00FA87BB /* ApiKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = "<group>"; };
+		EA5C2C92201840B700BD7B1A /* PlistHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistHelper.swift; sourceTree = "<group>"; };
+		EAA77946201DB96B00C6F09E /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		EACBAD1B201005E000769E70 /* MKMapView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Extension.swift"; sourceTree = "<group>"; };
+		EAF932AA201B0C350049DB67 /* FlickrPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
+		EAF932AC201B1C340049DB67 /* FlickrAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrAlbum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +77,7 @@
 				EA2EA30A200C351900FA87BB /* View */,
 				EA2EA30B200C351F00FA87BB /* Controller */,
 				EA2EA30C200C354100FA87BB /* Client */,
+				EA5C2C912018408F00BD7B1A /* Utility */,
 				EACBAD1A201005BD00769E70 /* Extensions */,
 				EA2EA308200C34FE00FA87BB /* Assets */,
 			);
@@ -93,7 +106,9 @@
 		EA2EA309200C351400FA87BB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EAF1EF992012689800C41C3D /* CoreDataStack */,
+				EAA77945201DB95C00C6F09E /* Error */,
+				EAF932A9201B0C150049DB67 /* Flickr */,
+				EAF1EF992012689800C41C3D /* CoreData */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -117,8 +132,26 @@
 		EA2EA30C200C354100FA87BB /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				EA1396E72017E374005163C2 /* Client.swift */,
+				EA1396E22016B327005163C2 /* BaseClient.swift */,
 			);
 			path = Client;
+			sourceTree = "<group>";
+		};
+		EA5C2C912018408F00BD7B1A /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				EA5C2C92201840B700BD7B1A /* PlistHelper.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		EAA77945201DB95C00C6F09E /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				EAA77946201DB96B00C6F09E /* NetworkingError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 		EACBAD1A201005BD00769E70 /* Extensions */ = {
@@ -130,11 +163,20 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		EAF1EF992012689800C41C3D /* CoreDataStack */ = {
+		EAF1EF992012689800C41C3D /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = CoreDataStack;
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		EAF932A9201B0C150049DB67 /* Flickr */ = {
+			isa = PBXGroup;
+			children = (
+				EAF932AA201B0C350049DB67 /* FlickrPhoto.swift */,
+				EAF932AC201B1C340049DB67 /* FlickrAlbum.swift */,
+			);
+			path = Flickr;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,8 +253,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA2EA2F6200C1C6800FA87BB /* AppDelegate.swift in Sources */,
+				EAF932AB201B0C350049DB67 /* FlickrPhoto.swift in Sources */,
+				EA1396E32016B327005163C2 /* BaseClient.swift in Sources */,
+				EAF932AD201B1C340049DB67 /* FlickrAlbum.swift in Sources */,
+				EAA77947201DB96B00C6F09E /* NetworkingError.swift in Sources */,
 				EA16FFB6201598D1003B33ED /* MKCoordinateRegion+Extension.swift in Sources */,
+				EA1396E82017E374005163C2 /* Client.swift in Sources */,
 				EACBAD1C201005E000769E70 /* MKMapView+Extension.swift in Sources */,
+				EA5C2C93201840B700BD7B1A /* PlistHelper.swift in Sources */,
 				EA2EA310200C425100FA87BB /* TravelMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
