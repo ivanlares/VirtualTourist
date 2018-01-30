@@ -9,7 +9,7 @@
 import MapKit
 
 /// Represents the main map controller that allows users to drop pins
-class TravelMapViewController: UIViewController {
+class TravelMapViewController: MapViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var editingLabel: UILabel!
@@ -64,7 +64,12 @@ class TravelMapViewController: UIViewController {
         
         switch gesture.state {
         case .began:
-            addAnnotation(inCoordinate: mapCoordiante)
+        
+            addAnnotation(inCoordinate: mapCoordiante, toMapView: mapView){
+                [weak self] annotation in
+                // update current pin
+                self?.currentPin = annotation
+            }
         case .changed:
             currentPin?.coordinate = mapCoordiante
         case .ended:
@@ -94,6 +99,23 @@ class TravelMapViewController: UIViewController {
             setEditLabel(hidden: true, animated: true)
         }
     }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard segue.identifier == Constants.albumSegueIdentifier else{
+            return
+        }
+        guard let albumViewController = segue.destination as? AlbumViewController else{
+            return
+        }
+        guard let location = sender as? CLLocationCoordinate2D  else{
+            return
+        }
+        
+        albumViewController.location = location
+    }
 }
 
 // MARK: - Map View Delegate
@@ -108,8 +130,8 @@ extension TravelMapViewController: MKMapViewDelegate{
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
-        performSegue(withIdentifier: Constants.albumSegueIdentifier, sender: nil)
+       
+        performSegue(withIdentifier: Constants.albumSegueIdentifier, sender: view.annotation?.coordinate)
     }
     
 }
@@ -122,15 +144,6 @@ extension TravelMapViewController{
         
         let mapCoordiante: CLLocationCoordinate2D = mapView.convert(coordinate, toCoordinateFrom: mapView)
         return mapCoordiante
-    }
-    
-    fileprivate func addAnnotation(inCoordinate coordinate: CLLocationCoordinate2D){
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        mapView.addAnnotation(annotation)
-        // update current pin
-        currentPin = annotation
     }
     
     /// Save map view region and camera into user defaults

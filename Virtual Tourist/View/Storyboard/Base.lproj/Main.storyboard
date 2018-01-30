@@ -136,6 +136,7 @@
                     <connections>
                         <outlet property="bottomButtonConstraint" destination="Qm6-BB-YkH" id="JPn-LX-tfd"/>
                         <outlet property="deletePhotosButton" destination="3Q4-6O-eAc" id="QRy-ft-fcR"/>
+                        <outlet property="mapView" destination="z7X-sG-8e6" id="MoR-Wn-uL5"/>
                         <outlet property="selectButton" destination="sCB-LA-Uxt" id="Squ-4s-HIO"/>
                     </connections>
                 </viewController>

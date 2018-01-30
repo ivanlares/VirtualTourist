@@ -7,17 +7,30 @@
 //
 
 import UIKit
+import MapKit
 
-class AlbumViewController: UIViewController {
+class AlbumViewController: MapViewController {
 
     @IBOutlet weak var deletePhotosButton: UIButton!
     @IBOutlet weak var bottomButtonConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectButton: UIButton!
     
+    @IBOutlet weak var mapView: MKMapView!
+    var location: CLLocationCoordinate2D?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureDeleteButton(isHidden: true)
+        
+        guard let location = location else { return }
+        
+        addAnnotation(inCoordinate: location, toMapView: mapView, completion: { annoation in
+            
+            // zoom in
+            self.mapView.camera.centerCoordinate = annoation.coordinate
+            self.mapView.camera.altitude = 100000
+        })
     }
     
     // MARK: - Target Action
