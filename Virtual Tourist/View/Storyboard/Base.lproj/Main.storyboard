@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -48,11 +50,97 @@
                     <connections>
                         <outlet property="editingLabel" destination="ETH-kC-9CL" id="GmL-EP-IJx"/>
                         <outlet property="mapView" destination="Bue-ve-cKV" id="8PO-by-4cr"/>
+                        <segue destination="mBU-LB-7Cy" kind="show" identifier="albumSegueIdentifier" id="bKK-gG-f9R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="364" y="31.934032983508249"/>
+        </scene>
+        <!--Album View Controller-->
+        <scene sceneID="oDN-he-aPG">
+            <objects>
+                <viewController id="mBU-LB-7Cy" customClass="AlbumViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tmn-B3-Brj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="r4C-GK-LJg">
+                                <rect key="frame" x="0.0" y="286.5" width="375" height="337.5"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Z43-Ql-GZf">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jM4-cy-Jj2">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="z7X-sG-8e6">
+                                <rect key="frame" x="0.0" y="64" width="375" height="222.5"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Q4-6O-eAc">
+                                <rect key="frame" x="0.0" y="624" width="375" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="JHh-E7-Ve8"/>
+                                </constraints>
+                                <state key="normal" title="Delete Selected Photos"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3Q4-6O-eAc" firstAttribute="centerX" secondItem="MHq-L1-NqK" secondAttribute="centerX" id="5s8-E3-e7T"/>
+                            <constraint firstItem="r4C-GK-LJg" firstAttribute="leading" secondItem="MHq-L1-NqK" secondAttribute="leading" id="9GY-Xj-tMF"/>
+                            <constraint firstItem="z7X-sG-8e6" firstAttribute="leading" secondItem="MHq-L1-NqK" secondAttribute="leading" id="BnX-Md-apI"/>
+                            <constraint firstItem="3Q4-6O-eAc" firstAttribute="bottom" secondItem="MHq-L1-NqK" secondAttribute="bottom" id="Qm6-BB-YkH"/>
+                            <constraint firstItem="z7X-sG-8e6" firstAttribute="height" secondItem="tmn-B3-Brj" secondAttribute="height" multiplier="1/3" id="Qoj-bs-Kyd"/>
+                            <constraint firstItem="z7X-sG-8e6" firstAttribute="top" secondItem="MHq-L1-NqK" secondAttribute="top" id="Xh1-9s-zfh"/>
+                            <constraint firstItem="3Q4-6O-eAc" firstAttribute="top" secondItem="r4C-GK-LJg" secondAttribute="bottom" id="bpY-TA-AZI"/>
+                            <constraint firstItem="3Q4-6O-eAc" firstAttribute="width" secondItem="tmn-B3-Brj" secondAttribute="width" id="c39-VW-IoC"/>
+                            <constraint firstItem="r4C-GK-LJg" firstAttribute="trailing" secondItem="MHq-L1-NqK" secondAttribute="trailing" id="dFd-Ie-gEG"/>
+                            <constraint firstItem="z7X-sG-8e6" firstAttribute="trailing" secondItem="MHq-L1-NqK" secondAttribute="trailing" id="ux8-ud-Qd0"/>
+                            <constraint firstItem="r4C-GK-LJg" firstAttribute="top" secondItem="z7X-sG-8e6" secondAttribute="bottom" id="zwo-rS-hbg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="MHq-L1-NqK"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Opv-2H-3fv">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="riX-Pi-pOp">
+                                <connections>
+                                    <action selector="didSelectRefresh:" destination="mBU-LB-7Cy" id="Tlc-rZ-UpQ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem id="ZzY-pM-bhC">
+                                <button key="customView" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sCB-LA-Uxt">
+                                    <rect key="frame" x="239" y="6" width="83" height="32"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Select"/>
+                                    <state key="selected" title="Done"/>
+                                    <connections>
+                                        <action selector="didPressSelect:" destination="mBU-LB-7Cy" eventType="touchUpInside" id="c4L-3b-myU"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="bottomButtonConstraint" destination="Qm6-BB-YkH" id="JPn-LX-tfd"/>
+                        <outlet property="deletePhotosButton" destination="3Q4-6O-eAc" id="QRy-ft-fcR"/>
+                        <outlet property="selectButton" destination="sCB-LA-Uxt" id="Squ-4s-HIO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="up6-F7-XOa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1234" y="32"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="d7o-wd-lgX">

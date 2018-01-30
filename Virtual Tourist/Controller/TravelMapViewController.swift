@@ -107,7 +107,7 @@ extension TravelMapViewController: MKMapViewDelegate{
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
-        print(#function)
+        performSegue(withIdentifier: Constants.albumSegueIdentifier, sender: nil)
     }
     
 }
@@ -200,6 +200,9 @@ extension TravelMapViewController{
         // Keys used to store map location in user defaults
         static let mapRegionKey = "mapViewRegionKey"
         static let mapCameraKey = "mapViewCameraKey"
+        
+        // Segue identifier
+        static let albumSegueIdentifier = "albumSegueIdentifier"
         
         private init() {}
     }
