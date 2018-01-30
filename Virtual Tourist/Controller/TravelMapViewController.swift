@@ -57,7 +57,9 @@ class TravelMapViewController: UIViewController {
         
         // adjust touch location and create coordinate
         var pinLocation = gesture.location(in: mapView)
-        pinLocation.y -= Constants.thumbOffset
+        if !Platform.isSimulator{
+            pinLocation.y -= Constants.thumbOffset
+        }
         let mapCoordiante = mapCoordinateFrom(coordinate:pinLocation)
         
         switch gesture.state {

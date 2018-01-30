@@ -60,13 +60,13 @@
         <!--Album View Controller-->
         <scene sceneID="oDN-he-aPG">
             <objects>
-                <viewController id="mBU-LB-7Cy" customClass="AlbumViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController wantsFullScreenLayout="YES" id="mBU-LB-7Cy" customClass="AlbumViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tmn-B3-Brj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="r4C-GK-LJg">
-                                <rect key="frame" x="0.0" y="286.5" width="375" height="337.5"/>
+                                <rect key="frame" x="0.0" y="201" width="375" height="359"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Z43-Ql-GZf">
                                     <size key="itemSize" width="50" height="50"/>
@@ -86,10 +86,10 @@
                                 </cells>
                             </collectionView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="z7X-sG-8e6">
-                                <rect key="frame" x="0.0" y="64" width="375" height="222.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="201"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Q4-6O-eAc">
-                                <rect key="frame" x="0.0" y="624" width="375" height="43"/>
+                                <rect key="frame" x="0.0" y="560" width="375" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="JHh-E7-Ve8"/>
                                 </constraints>
@@ -112,6 +112,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="MHq-L1-NqK"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="Opv-2H-3fv">
                         <rightBarButtonItems>
                             <barButtonItem systemItem="refresh" id="riX-Pi-pOp">
