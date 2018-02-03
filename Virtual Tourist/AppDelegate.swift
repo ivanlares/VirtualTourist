@@ -16,15 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        Client.sharedInstance.flickrPhotoSearch(withlatitude: "37.7749", longitude: "122.4194", perPage: "10") {
-            album, error in
-            
-            //print(error?.localizedDescription ?? "no error")
-            
-            print(album ?? "no album data")
-        }
-        
+                
         return true
     }
 
