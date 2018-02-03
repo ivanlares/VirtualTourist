@@ -109,11 +109,7 @@ extension AlbumViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if let flickrCell = collectionView.dequeueReusableCell(withReuseIdentifier: FlickrCollectionViewCell.reuseIdentifier, for: indexPath) as? FlickrCollectionViewCell{
-            
-            if let title = flickrAlbum?.photos[indexPath.row].title{
-                flickrCell.titleLabel.text = title
-            }
-            
+                        
             return flickrCell
         } else{
             return UICollectionViewCell()
