@@ -18,11 +18,16 @@
 		EA2EA310200C425100FA87BB /* TravelMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */; };
 		EA2EA314200D4C2C00FA87BB /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA2EA313200D4C2C00FA87BB /* ApiKeys.plist */; };
 		EA5C2C93201840B700BD7B1A /* PlistHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C2C92201840B700BD7B1A /* PlistHelper.swift */; };
+		EA62F554202FC9130067F937 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA62F553202FC9130067F937 /* String+Extension.swift */; };
 		EAA77947201DB96B00C6F09E /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA77946201DB96B00C6F09E /* NetworkingError.swift */; };
 		EAA77949201FEDCB00C6F09E /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA77948201FEDCB00C6F09E /* AlbumViewController.swift */; };
 		EAB2ECF62020368000E60C37 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB2ECF52020368000E60C37 /* Platform.swift */; };
 		EAB2ECF920203FED00E60C37 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB2ECF820203FED00E60C37 /* MapViewController.swift */; };
 		EACBAD1C201005E000769E70 /* MKMapView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACBAD1B201005E000769E70 /* MKMapView+Extension.swift */; };
+		EAF8E1042028D61600806F80 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF8E1032028D61600806F80 /* CoreDataStack.swift */; };
+		EAF8E1072028D63A00806F80 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAF8E1052028D63A00806F80 /* Model.xcdatamodeld */; };
+		EAF8E1142028DCE400806F80 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF8E1102028DCE400806F80 /* Album.swift */; };
+		EAF8E1162028DCE400806F80 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF8E1122028DCE400806F80 /* Photo.swift */; };
 		EAF932AB201B0C350049DB67 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF932AA201B0C350049DB67 /* FlickrPhoto.swift */; };
 		EAF932AD201B1C340049DB67 /* FlickrAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF932AC201B1C340049DB67 /* FlickrAlbum.swift */; };
 /* End PBXBuildFile section */
@@ -41,11 +46,16 @@
 		EA2EA30F200C425100FA87BB /* TravelMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelMapViewController.swift; sourceTree = "<group>"; };
 		EA2EA313200D4C2C00FA87BB /* ApiKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = "<group>"; };
 		EA5C2C92201840B700BD7B1A /* PlistHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistHelper.swift; sourceTree = "<group>"; };
+		EA62F553202FC9130067F937 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		EAA77946201DB96B00C6F09E /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		EAA77948201FEDCB00C6F09E /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		EAB2ECF52020368000E60C37 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		EAB2ECF820203FED00E60C37 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		EACBAD1B201005E000769E70 /* MKMapView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Extension.swift"; sourceTree = "<group>"; };
+		EAF8E1032028D61600806F80 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		EAF8E1062028D63A00806F80 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		EAF8E1102028DCE400806F80 /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
+		EAF8E1122028DCE400806F80 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		EAF932AA201B0C350049DB67 /* FlickrPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
 		EAF932AC201B1C340049DB67 /* FlickrAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrAlbum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -187,6 +197,7 @@
 			children = (
 				EACBAD1B201005E000769E70 /* MKMapView+Extension.swift */,
 				EA16FFB5201598D1003B33ED /* MKCoordinateRegion+Extension.swift */,
+				EA62F553202FC9130067F937 /* String+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -194,6 +205,10 @@
 		EAF1EF992012689800C41C3D /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				EAF8E1102028DCE400806F80 /* Album.swift */,
+				EAF8E1122028DCE400806F80 /* Photo.swift */,
+				EAF8E1032028D61600806F80 /* CoreDataStack.swift */,
+				EAF8E1052028D63A00806F80 /* Model.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -280,7 +295,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAF8E1162028DCE400806F80 /* Photo.swift in Sources */,
+				EAF8E1042028D61600806F80 /* CoreDataStack.swift in Sources */,
 				EA2EA2F6200C1C6800FA87BB /* AppDelegate.swift in Sources */,
+				EA62F554202FC9130067F937 /* String+Extension.swift in Sources */,
 				EA0B528D2023F39C0072E382 /* FlickrCollectionViewCell.swift in Sources */,
 				EAB2ECF62020368000E60C37 /* Platform.swift in Sources */,
 				EAF932AB201B0C350049DB67 /* FlickrPhoto.swift in Sources */,
@@ -289,7 +307,9 @@
 				EAA77947201DB96B00C6F09E /* NetworkingError.swift in Sources */,
 				EAB2ECF920203FED00E60C37 /* MapViewController.swift in Sources */,
 				EA16FFB6201598D1003B33ED /* MKCoordinateRegion+Extension.swift in Sources */,
+				EAF8E1142028DCE400806F80 /* Album.swift in Sources */,
 				EA1396E82017E374005163C2 /* Client.swift in Sources */,
+				EAF8E1072028D63A00806F80 /* Model.xcdatamodeld in Sources */,
 				EACBAD1C201005E000769E70 /* MKMapView+Extension.swift in Sources */,
 				EA5C2C93201840B700BD7B1A /* PlistHelper.swift in Sources */,
 				EA2EA310200C425100FA87BB /* TravelMapViewController.swift in Sources */,
@@ -478,6 +498,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EAF8E1052028D63A00806F80 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EAF8E1062028D63A00806F80 /* Model.xcdatamodel */,
+			);
+			currentVersion = EAF8E1062028D63A00806F80 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = EA2EA2EA200C1C6800FA87BB /* Project object */;
 }

@@ -7,10 +7,11 @@
 //
 
 import MapKit
+import CoreData
 
 /// Represents the main map controller that allows users to drop pins
 class TravelMapViewController: MapViewController {
-
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var editingLabel: UILabel!
     var currentPin: MKPointAnnotation?
@@ -30,7 +31,9 @@ class TravelMapViewController: MapViewController {
         mapView.delegate = self
         
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        print("\n\n", documentsPath, "\n\n")
+        print(documentsPath)
+        
+        loadMapViewPins()
     }
     
     // MARK: Helper Methods
@@ -45,6 +48,25 @@ class TravelMapViewController: MapViewController {
         
         UIView.animate(withDuration: animated ? 0.5 : 0){
             self.editingLabel.alpha = (hidden ? 0.0 : 1.0)
+        }
+    }
+    
+    /// adds pins to map views
+    fileprivate func loadMapViewPins() {
+        
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let albums = retrieveAlbums()
+        
+        for album in albums{
+            
+            guard let latitude = album.latitude?.toDouble(), let longitude = album.longitude?.toDouble() else {
+                continue
+            }
+            
+            let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            
+            addAnnotation(inCoordinate: location, toMapView: mapView, completion: nil)
         }
     }
     
@@ -64,7 +86,7 @@ class TravelMapViewController: MapViewController {
         
         switch gesture.state {
         case .began:
-        
+            
             addAnnotation(inCoordinate: mapCoordiante, toMapView: mapView){
                 [weak self] annotation in
                 // update current pin
@@ -73,6 +95,11 @@ class TravelMapViewController: MapViewController {
         case .changed:
             currentPin?.coordinate = mapCoordiante
         case .ended:
+            // save to core data
+            if let location = currentPin?.coordinate{
+                storeAlbum(withLocation: location)
+            }
+            // delete refrence to pin
             currentPin = nil
         default: break
         }
@@ -115,6 +142,31 @@ class TravelMapViewController: MapViewController {
         }
         
         albumViewController.location = location
+    }
+}
+
+// MARK: Core Data
+
+extension TravelMapViewController{
+    
+    fileprivate func storeAlbum(withLocation location: CLLocationCoordinate2D){
+        
+        let stack = AppDelegate.sharedCoreDataStack
+        guard let entity = NSEntityDescription.entity(forEntityName: "Album", in: stack.mainContext) else { return }
+        
+        let _ = Album(entity: entity, insertInto: stack.mainContext, location: location)
+        stack.mainContext.perform {
+            stack.saveContext()
+        }
+    }
+    
+    /// retrieve core data album objects
+    fileprivate func retrieveAlbums() -> [Album] {
+        
+        let fetchRequest = NSFetchRequest<Album>(entityName: "Album")
+        let albums = try? AppDelegate.sharedCoreDataStack.mainContext.fetch(fetchRequest)
+        
+        return albums ?? [Album]()
     }
 }
 

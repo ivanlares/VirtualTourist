@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    lazy var coreDataStack: CoreDataStack = CoreDataStack(modelName: "Model")
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -45,3 +45,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+extension AppDelegate{
+    
+    /// returns the app delegate associated with the application
+    class var sharedDelegate: AppDelegate{
+
+        return (UIApplication.shared.delegate as! AppDelegate)
+    }
+    
+    /// returns the core data stack property,
+    /// stored in the app delegate
+    class var sharedCoreDataStack: CoreDataStack{
+        return sharedDelegate.coreDataStack
+    }
+    
+}

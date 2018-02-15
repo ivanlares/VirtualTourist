@@ -6,7 +6,7 @@
 //  Copyright © 2018 ivan lares. All rights reserved.
 //
 
-import UIKit
+import CoreData
 import MapKit
 
 class AlbumViewController: MapViewController {
@@ -14,10 +14,12 @@ class AlbumViewController: MapViewController {
     @IBOutlet weak var deletePhotosButton: UIButton!
     @IBOutlet weak var bottomButtonConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectButton: UIButton!
-    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    
+    var album: Album? 
+    var location: CLLocationCoordinate2D?
     
     fileprivate let isPad = (UIScreen.main.traitCollection.userInterfaceIdiom == .pad)
     
@@ -27,9 +29,6 @@ class AlbumViewController: MapViewController {
         return UIEdgeInsets(top: 50.0, left: isPad ? 40 : 20.0, bottom: 50.0, right: isPad ? 40 : 20.0)
     }()
     
-    var flickrAlbum: FlickrAlbum?
-    var location: CLLocationCoordinate2D?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,33 +36,39 @@ class AlbumViewController: MapViewController {
         
         guard let location = location else { return }
         
-        addAnnotation(inCoordinate: location, toMapView: mapView, completion: { annoation in
-            
-            // zoom in
-            self.mapView.camera.centerCoordinate = annoation.coordinate
-            self.mapView.camera.altitude = 100000
-        })
+        addAnnotation(atLocation: location)
         
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        downloadPhotos(location: location){
-            (album, error) in
-            
-            DispatchQueue.main.async {
-                
-                if let error = error{
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                if let album = album{
-                    self.flickrAlbum = album
-                }
-                
-                self.collectionView.reloadData()
-            }
-        }
+        let album = performAlbumFetchRequest(withLocation: location)
+        
+        // TODO: Create NSFetchedResultsController
+        // give it a context and a fetchRequest
+        // hook it up to colleciton view
+        
+        
+//        downloadPhotos(location: location){
+//            (album, error) in
+//
+//            DispatchQueue.main.async {
+//
+//                if let error = error{
+//                    print(error.localizedDescription)
+//                    return
+//                }
+//
+//                if let album = album{
+//                    //self.flickrAlbum = album
+//                }
+//
+//                self.collectionView.reloadData()
+//            }
+//        }
+        
+        
+        
+      
     }
     
     // MARK: - Target Action
@@ -96,6 +101,36 @@ class AlbumViewController: MapViewController {
         }
     }
     
+    func addAnnotation(atLocation location: CLLocationCoordinate2D, withZoomLevel level: CLLocationDistance = 100000){
+        
+        addAnnotation(inCoordinate: location, toMapView: mapView, completion: { annoation in
+            
+            // zoom in
+            self.mapView.camera.centerCoordinate = annoation.coordinate
+            self.mapView.camera.altitude = level
+        })
+    }
+    
+}
+
+// MARK: - Core Data
+
+extension AlbumViewController{
+    
+    
+    func performAlbumFetchRequest(withLocation location: CLLocationCoordinate2D) -> [Album]? {
+        
+        let fetchRequest: NSFetchRequest<Album> = Album.fetchRequest()
+        
+        let searchPredicate = NSPredicate(format: "longitude == %@ && latitude == %@", argumentArray: [String(location.longitude), String(location.latitude)])
+        
+        fetchRequest.predicate = searchPredicate
+        
+        let context = AppDelegate.sharedCoreDataStack.mainContext
+        
+        let results = try? context.fetch(fetchRequest)
+        return results
+    }
 }
 
 // MARK: - Collection View Data Source
@@ -103,7 +138,9 @@ class AlbumViewController: MapViewController {
 extension AlbumViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return flickrAlbum?.photos.count ?? 0
+        return 0
+        
+        //flickrAlbum?.photos.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
