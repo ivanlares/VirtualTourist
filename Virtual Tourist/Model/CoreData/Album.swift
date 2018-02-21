@@ -26,6 +26,22 @@ public class Album: NSManagedObject {
     
 }
 
+// MARK: - Helper
+
+extension Album{
+    
+    /// true if photos is not empty 
+    var isEmpty: Bool{
+        
+        guard let photos = photos else{
+            return false
+        }
+        
+        return photos.count > 0
+    }
+    
+}
+
 // MARK: - Fetch Request
 
 extension Album {

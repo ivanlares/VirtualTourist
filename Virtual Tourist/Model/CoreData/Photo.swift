@@ -26,4 +26,13 @@ extension Photo {
         return NSFetchRequest<Photo>(entityName: "Photo")
     }
     
+    class func photo(fromFlickrPhoto flickrPhoto: FlickrPhoto, inContext context: NSManagedObjectContext?) -> Photo{
+        
+        let photo = Photo(entity: Photo.entity(), insertInto: context)
+        photo.urlString = flickrPhoto.urlString
+        photo.textDescription = flickrPhoto.title
+        
+        return photo
+    }
+    
 }
