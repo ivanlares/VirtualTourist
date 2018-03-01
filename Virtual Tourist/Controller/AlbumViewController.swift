@@ -40,23 +40,21 @@ class AlbumViewController: MapViewController {
         return inset
     }()
     
+    // MARK: - Controller Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureMapView()
         configureDeleteButton(isHidden: true)
         
-        guard let location = location else { return }
-        
-        addAnnotation(atLocation: location)
-        
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        guard let album = performAlbumFetchRequest(withLocation: location)?.first else {
-            return
-        }
-        self.album = album
+        guard let location = location else { return }
+
+        addMapAnnotation(atLocation: location)
+        loadAlbumFromCoreData(withLocation: location)
         
         downloadPhotos()
     }
@@ -108,6 +106,11 @@ class AlbumViewController: MapViewController {
         mapView.isScrollEnabled = false
     }
     
+    /// adds map annotation at specified location
+    func addMapAnnotation(atLocation location: CLLocationCoordinate2D){
+        
+        addAnnotation(atLocation: location)
+    }
 }
 
 // MARK: - Core Data
@@ -127,6 +130,16 @@ extension AlbumViewController{
         
         let results = try? context.fetch(fetchRequest)
         return results
+    }
+    
+    /// Fetches initial album from core data and
+    /// sets self.album
+    func loadAlbumFromCoreData(withLocation location: CLLocationCoordinate2D){
+        
+        guard let album = performAlbumFetchRequest(withLocation: location)?.first else {
+            return
+        }
+        self.album = album
     }
 }
 
