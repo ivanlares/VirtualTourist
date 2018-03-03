@@ -109,6 +109,9 @@
                                     <constraint firstAttribute="height" constant="43" id="JHh-E7-Ve8"/>
                                 </constraints>
                                 <state key="normal" title="Delete Selected Photos"/>
+                                <connections>
+                                    <action selector="didPressDelete:" destination="mBU-LB-7Cy" eventType="touchUpInside" id="1b8-ms-Ejn"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

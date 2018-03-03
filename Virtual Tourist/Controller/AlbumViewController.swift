@@ -45,9 +45,10 @@ class AlbumViewController: MapViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureMapView()
-        configureDeleteButton(isHidden: true)
+        collectionView.allowsMultipleSelection = true
         
+        configureMapView()
+        isEditing = false
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -63,31 +64,34 @@ class AlbumViewController: MapViewController {
     
     @IBAction func didPressSelect(_ sender: UIButton) {
         
-        // select or unselect button
-        sender.isSelected = !sender.isSelected
-        
-        // if button is selected, unhide delete button
-        configureDeleteButton(isHidden: !sender.isSelected)
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.view.layoutIfNeeded()
-        })
+        toggleSelectButton()
+        toggleEditing()
     }
     
     @IBAction func didSelectRefresh(_ sender: UIBarButtonItem) {
         
     }
     
-    // MARK: - User Interface
-    
-    func configureDeleteButton(isHidden hidden: Bool){
+    @IBAction func didPressDelete(_ sender: Any) {
         
-        if hidden{
-            bottomButtonConstraint.constant = deletePhotosButton.frame.height
-        } else{
-            bottomButtonConstraint.constant = 0
+        let stack = AppDelegate.sharedCoreDataStack
+        
+        guard let selectedIndexPaths = collectionView.indexPathsForSelectedItems else {
+            return
         }
+        
+        selectedIndexPaths.forEach(){ indexPath in
+            
+            if let photo = album?.photos?.object(at: indexPath.row) as? Photo{
+                stack.mainContext.delete(photo)
+            }
+        }
+        
+        stack.saveContext()
+        collectionView.reloadData()
     }
+    
+    // MARK: - User Interface
     
     func addAnnotation(atLocation location: CLLocationCoordinate2D, withZoomLevel level: CLLocationDistance = 100000){
         
@@ -111,12 +115,49 @@ class AlbumViewController: MapViewController {
         
         addAnnotation(atLocation: location)
     }
+    
+    private func toggleSelectButton() {
+        
+        selectButton.isSelected = !selectButton.isSelected
+    }
+    
+    // MARK: - Editing
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        
+        super.setEditing(editing, animated: animated)
+        
+        deselectAllCells()
+        
+        if editing{
+            bottomButtonConstraint.constant = 0
+        } else{
+            bottomButtonConstraint.constant = deletePhotosButton.frame.height
+        }
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func deselectAllCells(){
+        
+        guard let selectedIndexPaths = collectionView.indexPathsForSelectedItems else {
+            return
+        }
+        
+        collectionView.deselectCells(atIdexPaths: selectedIndexPaths)
+        
+        if let cells = collectionView.cellsForItems(atIndexPaths: selectedIndexPaths) as? [FlickrCollectionViewCell]{
+            
+            cells.forEach({$0.shouldDim(false)})
+        }
+    }
 }
 
 // MARK: - Core Data
 
 extension AlbumViewController{
-    
     
     func performAlbumFetchRequest(withLocation location: CLLocationCoordinate2D) -> [Album]? {
         
@@ -156,6 +197,8 @@ extension AlbumViewController: UICollectionViewDataSource{
         
         if let flickrCell = collectionView.dequeueReusableCell(withReuseIdentifier: FlickrCollectionViewCell.reuseIdentifier, for: indexPath) as? FlickrCollectionViewCell{
             
+            flickrCell.prepareForReuse()
+            
             if let album = album, let photos = album.photos, let selectedPhotoObject = photos[indexPath.row] as? Photo, let photoData = selectedPhotoObject.photo as Data?, let image = UIImage(data: photoData){
                 
                 flickrCell.imageView.image = image
@@ -177,7 +220,6 @@ extension AlbumViewController: UICollectionViewDataSource{
                                 } else if let error = error{
                                     print(error.localizedDescription)
                                 }
-                                
                             }
                             
                         }
@@ -185,10 +227,54 @@ extension AlbumViewController: UICollectionViewDataSource{
                 }
             }
             
-            
             return flickrCell
         } else{
             return UICollectionViewCell()
+        }
+    }
+}
+
+// MARK: - Collection View Delegate
+
+extension AlbumViewController: UICollectionViewDelegate{
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        
+        return isEditing
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        switch isEditing {
+        case true:
+           
+            if let cell = collectionView.cellForItem(at: indexPath) as? FlickrCollectionViewCell{
+               
+                cell.shouldDim(cell.isSelected)
+                
+            }
+        case false:
+            break
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+        
+        return isEditing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        switch isEditing {
+        case true:
+            
+            if let cell = collectionView.cellForItem(at: indexPath) as? FlickrCollectionViewCell{
+                
+                cell.shouldDim(cell.isSelected)
+            }
+        case false:
+            break
         }
     }
 }

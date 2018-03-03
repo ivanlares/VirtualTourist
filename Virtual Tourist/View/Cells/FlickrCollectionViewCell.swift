@@ -14,4 +14,16 @@ class FlickrCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "flickrCollectionViewCell"
 
+    
+    // MARK: - User Interface
+    
+    func shouldDim(_ dim: Bool){
+        
+        imageView.alpha = dim ? 0.2 : 1.0
+    }
+    
+    override func prepareForReuse() {
+        
+        shouldDim(false)
+    }
 }
