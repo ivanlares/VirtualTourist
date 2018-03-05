@@ -62,7 +62,7 @@ public class CoreDataStack {
         
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel:self.managedObjectModel)
         let url =
-            self.applicationDocumentsDirectory.appendingPathComponent(self.modelName)
+            self.applicationDocumentsDirectory.appendingPathComponent(self.modelName + ".sqlite")
         do {
             let options =
                 [NSMigratePersistentStoresAutomaticallyOption:true]
