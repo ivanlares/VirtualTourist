@@ -16,12 +16,23 @@ public class Album: NSManagedObject {
     @NSManaged public var longitude: String?
     @NSManaged public var latitude: String?
     @NSManaged public var photos: NSOrderedSet?
+    /// default value is 0
+    @NSManaged public var page: Int32
     
     convenience init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?, location: CLLocationCoordinate2D) {
         
         self.init(entity: entity, insertInto: context)
         self.latitude = String(location.latitude)
         self.longitude = String(location.longitude)
+        self.page = 0
+    }
+    
+    convenience init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?, location: CLLocationCoordinate2D, page: Int32) {
+        
+        self.init(entity: entity, insertInto: context)
+        self.latitude = String(location.latitude)
+        self.longitude = String(location.longitude)
+        self.page = page
     }
     
 }
@@ -30,14 +41,27 @@ public class Album: NSManagedObject {
 
 extension Album{
     
-    /// true if photos is not empty 
+    /// true if photos are empty 
     var isEmpty: Bool{
         
         guard let photos = photos else{
             return false
         }
         
-        return photos.count > 0
+        return photos.count <= 0
+    }
+    
+    /// removes all photos from the managed object context
+    /// associated with `self`
+    func removeAllPhotos(){
+        
+        guard let photos = photos else {
+            return
+        }
+        
+        for photo in photos{
+            managedObjectContext?.delete(photo as! NSManagedObject)
+        }
     }
     
 }

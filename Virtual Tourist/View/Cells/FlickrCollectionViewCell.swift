@@ -24,6 +24,8 @@ class FlickrCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         
+        imageView.image = nil
+        isSelected = false
         shouldDim(false)
     }
 }

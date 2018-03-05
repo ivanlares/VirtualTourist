@@ -10,7 +10,7 @@ import CoreData
 import MapKit
 
 class AlbumViewController: MapViewController {
-
+    
     @IBOutlet weak var deletePhotosButton: UIButton!
     @IBOutlet weak var bottomButtonConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectButton: UIButton!
@@ -18,8 +18,13 @@ class AlbumViewController: MapViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
+    // Note: album is already stored to core-data database.
+    // Fetch request with lat/lon used to set this value.
     var album: Album? 
     var location: CLLocationCoordinate2D?
+    /// maximum number of pages for flickr search
+    static let maxPage:Int = 8
+    
     
     fileprivate let sectionInsets: UIEdgeInsets = {
         let isPad = DeviceHelper.isPad
@@ -53,13 +58,15 @@ class AlbumViewController: MapViewController {
         collectionView.delegate = self
         
         guard let location = location else { return }
-
+        
         addMapAnnotation(atLocation: location)
         loadAlbumFromCoreData(withLocation: location)
         
-        downloadPhotos()
+        if let album = album, album.isEmpty{
+            downloadPhotos()
+        }
     }
-
+    
     // MARK: - Target Action
     
     @IBAction func didPressSelect(_ sender: UIButton) {
@@ -69,6 +76,21 @@ class AlbumViewController: MapViewController {
     }
     
     @IBAction func didSelectRefresh(_ sender: UIBarButtonItem) {
+        
+        var pages: [Int] = Array(1...AlbumViewController.maxPage)
+        let pageToRemove: Int? = Int(album?.page ?? 0)
+        
+        if let pageToRemove = pageToRemove{
+            if let indexToRemove = pages.index(of: pageToRemove){
+                pages.remove(at: indexToRemove)
+            }
+        }
+        
+        pages.shuffle()
+        
+        let nextPage = pages.first!
+        
+        downloadPhotos(page: nextPage)
         
     }
     
@@ -189,48 +211,48 @@ extension AlbumViewController{
 extension AlbumViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    
+        
         return album?.photos?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if let flickrCell = collectionView.dequeueReusableCell(withReuseIdentifier: FlickrCollectionViewCell.reuseIdentifier, for: indexPath) as? FlickrCollectionViewCell{
-            
-            flickrCell.prepareForReuse()
-            
-            if let album = album, let photos = album.photos, let selectedPhotoObject = photos[indexPath.row] as? Photo, let photoData = selectedPhotoObject.photo as Data?, let image = UIImage(data: photoData){
-                
-                flickrCell.imageView.image = image
-            } else {
-                
-                if let album = album, let photos = album.photos, let selectedPhotoObject = photos[indexPath.row] as? Photo, let urlString = selectedPhotoObject.urlString, let url = URL(string: urlString){
-                    
-                    // download photo
-                   
-                    let task = URLSession.shared.dataTask(with: url){
-                            data, _, error in
-                        
-                            DispatchQueue.main.async {
-                                if let data = data{
-                                    
-                                    selectedPhotoObject.photo = data as NSData
-                                    AppDelegate.sharedCoreDataStack.saveContext()
-                                    collectionView.reloadItems(at: [indexPath])
-                                } else if let error = error{
-                                    print(error.localizedDescription)
-                                }
-                            }
-                            
-                        }
-                        task.resume()
-                }
-            }
-            
-            return flickrCell
-        } else{
+        guard let flickrCell = collectionView.dequeueReusableCell(withReuseIdentifier: FlickrCollectionViewCell.reuseIdentifier, for: indexPath) as? FlickrCollectionViewCell else {
             return UICollectionViewCell()
         }
+        
+        flickrCell.prepareForReuse()
+        
+        if let album = album, let photos = album.photos, let selectedPhotoObject = photos[indexPath.row] as? Photo, let photoData = selectedPhotoObject.photo as Data?, let image = UIImage(data: photoData){
+            
+            flickrCell.imageView.image = image
+        } else {
+            
+            if let album = album, let photos = album.photos, let selectedPhotoObject = photos[indexPath.row] as? Photo, let urlString = selectedPhotoObject.urlString, let url = URL(string: urlString){
+                
+                // download photo
+                
+                let task = URLSession.shared.dataTask(with: url){
+                    data, _, error in
+                    
+                    DispatchQueue.main.async {
+                        if let data = data{
+                            
+                            selectedPhotoObject.photo = data as NSData
+                            AppDelegate.sharedCoreDataStack.saveContext()
+                            collectionView.reloadItems(at: [indexPath])
+                        } else if let error = error{
+                            print(error.localizedDescription)
+                        }
+                    }
+                    
+                }
+                task.resume()
+            }
+        }
+        
+        return flickrCell
+        
     }
 }
 
@@ -243,14 +265,13 @@ extension AlbumViewController: UICollectionViewDelegate{
         return isEditing
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         switch isEditing {
         case true:
-           
+            
             if let cell = collectionView.cellForItem(at: indexPath) as? FlickrCollectionViewCell{
-               
+                
                 cell.shouldDim(cell.isSelected)
                 
             }
@@ -298,13 +319,13 @@ extension AlbumViewController: UICollectionViewDelegateFlowLayout{
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    
+        
         return sectionInsets
     }
     
     /*
      Spacing between the rows or columns
-    */
+     */
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         
         return rowSpacing
@@ -312,7 +333,7 @@ extension AlbumViewController: UICollectionViewDelegateFlowLayout{
     
     /*
      Spacing in-between cells.
-    */
+     */
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         
         return interItemSpacing
@@ -335,10 +356,7 @@ extension AlbumViewController{
     
     fileprivate func downloadPhotos(page: Int? = nil) {
         
-        guard let album = album, let location = location else {
-            return
-        }
-        guard !album.isEmpty else{
+        guard let location = location else {
             return
         }
         
@@ -346,7 +364,6 @@ extension AlbumViewController{
             (flickrAlbum, error) in
             
             DispatchQueue.main.async {
-                
                 if let error = error{
                     print(error.localizedDescription)
                     return
@@ -362,7 +379,12 @@ extension AlbumViewController{
                     photos.append(photo)
                 }
                 
+                guard let album = self.album else { return }
+                
+                album.removeAllPhotos()
+                
                 self.album?.photos = NSOrderedSet(array: photos)
+                self.album?.page = Int32(flickrAlbum.page)
                 AppDelegate.sharedCoreDataStack.saveContext()
                 self.collectionView.reloadData()
             }
