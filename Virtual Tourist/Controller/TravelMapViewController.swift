@@ -142,7 +142,7 @@ class TravelMapViewController: MapViewController {
         }
         
         albumViewController.location = location
-        
+
         if let annotation = mapView.annotations.first{
             mapView.deselectAnnotation(annotation, animated: false)
         }

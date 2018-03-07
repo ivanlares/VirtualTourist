@@ -217,43 +217,44 @@ extension AlbumViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let flickrCell = collectionView.dequeueReusableCell(withReuseIdentifier: FlickrCollectionViewCell.reuseIdentifier, for: indexPath) as? FlickrCollectionViewCell else {
+        guard let flickrCell = collectionView.dequeueReusableCell(withReuseIdentifier: FlickrCollectionViewCell.reuseIdentifier, for: indexPath) as? FlickrCollectionViewCell, let album = album, let photos = album.photos, let selectedPhotoObject = photos[indexPath.row] as? Photo else {
             return UICollectionViewCell()
         }
         
         flickrCell.prepareForReuse()
         
-        if let album = album, let photos = album.photos, let selectedPhotoObject = photos[indexPath.row] as? Photo, let photoData = selectedPhotoObject.photo as Data?, let image = UIImage(data: photoData){
+        if let photoData = selectedPhotoObject.photo as Data?, let image = UIImage(data: photoData){
             
+            // stop activity indicator when image is set
+            flickrCell.activityIndicator.stopAnimating()
             flickrCell.imageView.image = image
-        } else {
+        } else if let urlString = selectedPhotoObject.urlString, let url = URL(string: urlString){
             
-            if let album = album, let photos = album.photos, let selectedPhotoObject = photos[indexPath.row] as? Photo, let urlString = selectedPhotoObject.urlString, let url = URL(string: urlString){
+            // start indicator
+            flickrCell.activityIndicator.startAnimating()
+            
+            // download photo
+            let task = URLSession.shared.dataTask(with: url){
+                data, _, error in
                 
-                // download photo
-                
-                let task = URLSession.shared.dataTask(with: url){
-                    data, _, error in
-                    
-                    DispatchQueue.main.async {
-                        if let data = data{
-                            
-                            selectedPhotoObject.photo = data as NSData
-                            AppDelegate.sharedCoreDataStack.saveContext()
-                            collectionView.reloadItems(at: [indexPath])
-                        } else if let error = error{
-                            print(error.localizedDescription)
-                        }
+                DispatchQueue.main.async {
+                    if let data = data{
+                        
+                        selectedPhotoObject.photo = data as NSData
+                        AppDelegate.sharedCoreDataStack.saveContext()
+                        collectionView.reloadItems(at: [indexPath])
+                    } else if let error = error{
+                        print(error.localizedDescription)
                     }
-                    
                 }
-                task.resume()
+                
             }
+            task.resume()
         }
         
         return flickrCell
-        
     }
+    
 }
 
 // MARK: - Collection View Delegate

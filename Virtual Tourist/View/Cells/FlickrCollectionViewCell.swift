@@ -11,9 +11,10 @@ import UIKit
 class FlickrCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     static let reuseIdentifier = "flickrCollectionViewCell"
-
+    private static let placeholderImageName = "placeHolderImage"
     
     // MARK: - User Interface
     
@@ -24,8 +25,12 @@ class FlickrCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         
-        imageView.image = nil
+        imageView.image = nil 
+        if let placeHolderImage = UIImage(named: FlickrCollectionViewCell.placeholderImageName){
+           imageView.image = placeHolderImage
+        }
         isSelected = false
         shouldDim(false)
+        activityIndicator.stopAnimating()
     }
 }
